@@ -28,8 +28,9 @@ export default function ChatWidget({ userPosition, onOpenPinForm }) {
     setLoading(true);
 
     try {
+      console.log("CALLING GEMINI WITH:", text);
       const parsed = await parseCrisisMessage(text);
-
+      console.log("PARSED RESULT:", parsed);
       let lat = userPosition?.[0] ?? 20;
       let lng = userPosition?.[1] ?? 0;
 
@@ -57,7 +58,9 @@ export default function ChatWidget({ userPosition, onOpenPinForm }) {
         lat,
         lng,
       });
-    } catch {
+    } catch(err) {
+      console.error("CHAT ERROR:", err);
+      alert(err.message);
       setMessages((prev) => [
         ...prev,
         {

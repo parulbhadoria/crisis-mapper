@@ -1,7 +1,7 @@
 import { GEMINI_SYSTEM_PROMPT } from './constants';
 
 const GEMINI_API_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
 export async function parseCrisisMessage(userMessage) {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -26,15 +26,20 @@ export async function parseCrisisMessage(userMessage) {
   });
 
   if (!response.ok) {
-    throw new Error(`Gemini API error: ${response.status}`);
-  }
+  const errText = await response.text();
+  console.error("GEMINI RESPONSE:", errText);
+
+  throw new Error(
+    `Gemini API error: ${response.status} ${errText}`
+  );
+}
 
   const data = await response.json();
   const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
   if (!text) {
     throw new Error('Empty response from Gemini');
   }
-
+  console.log("RAW GEMINI RESPONSE:", text);
   const cleaned = text.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
 
   try {
@@ -46,7 +51,9 @@ export async function parseCrisisMessage(userMessage) {
       note: (parsed.note || '').slice(0, 100),
       type: parsed.type || 'needs_help',
     };
-  } catch {
+  } catch(err) {
+    console.log("CLEANED RESPONSE:", cleaned);
+    console.error("PARSE ERROR:", err);
     throw new Error('Failed to parse Gemini response');
   }
 }
@@ -62,6 +69,7 @@ export async function geocodeLocationHint(hint) {
   if (!response.ok) return null;
 
   const results = await response.json();
+  console.log("FULL GEOCODE RESULTS:", results);
   if (!results?.length) return null;
 
   return {
@@ -69,3 +77,5 @@ export async function geocodeLocationHint(hint) {
     lng: parseFloat(results[0].lon),
   };
 }
+
+console.log("GEMINI KEY:", import.meta.env.VITE_GEMINI_API_KEY);
