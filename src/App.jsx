@@ -76,6 +76,43 @@ function AppContent() {
     [addPin, navigate]
   );
 
+  const handleSOS = useCallback(async () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async ({ coords }) => {
+      try {
+        const id = await addPin({
+          lat: coords.latitude,
+          lng: coords.longitude,
+          category: "Medical",
+          severity: "Critical",
+          type: "needs_help",
+          note: "🚨 Emergency SOS",
+          name: "",
+        });
+
+        navigate(`/pin/${id}`);
+        alert("🚨 SOS sent successfully!");
+      } catch (err) {
+        console.error(err);
+        alert("Failed to send SOS.");
+      }
+    },
+    () => {
+      alert("Unable to fetch your location.");
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0,
+    }
+  );
+}, [addPin, navigate]);
+
   const handleUpvote = useCallback(
     async (id) => {
       if (upvotedIds.has(id)) return;
@@ -188,7 +225,35 @@ function AppContent() {
         initialData={pinFormData}
         submitting={submitting}
       />
-
+      <button
+          onClick={handleSOS}
+          className="
+            fixed
+            bottom-24
+            right-6
+            z-[9999]
+            h-16
+            w-16
+            rounded-full
+            bg-gradient-to-br
+            from-red-500
+            to-red-700
+            text-white
+            shadow-2xl
+            hover:scale-110
+            active:scale-95
+            transition
+            animate-pulse
+            flex
+            items-center
+            justify-center
+            text-xl
+            font-bold
+          "
+          title="Emergency SOS"
+        >
+          🚨 SOS
+        </button>
       <ChatWidget userPosition={position} onOpenPinForm={handleOpenPinForm} />
     </div>
   );

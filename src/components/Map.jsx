@@ -5,6 +5,8 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
 import { CATEGORIES, SEVERITY_CONFIG, RESOLVED_COLOR, USER_ZOOM } from '../lib/constants';
 import PinPopup from './PinPopup';
+import { Circle, Tooltip } from "react-leaflet";
+import { useHotspots } from "../hooks/useHotspots";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -159,6 +161,7 @@ export default function MapView({
     () => (highlightPinId ? pins.find((p) => p.id === highlightPinId) : null),
     [pins, highlightPinId]
   );
+  const hotspots = useHotspots(filteredPins);
 
   const handleMapClick = useCallback(
     (lat, lng) => {
@@ -192,6 +195,57 @@ export default function MapView({
         <MapClickHandler onMapClick={handleMapClick} />
         <MapController center={center} zoom={zoom} flyToPin={highlightPin} />
         <HeatmapLayer pins={filteredPins} visible={viewMode === 'heatmap'} />
+        
+        {hotspots.map((spot, i) => (
+  <Circle
+    key={i}
+    center={[spot.lat, spot.lng]}
+    radius={
+      spot.level === "critical"
+        ? 600
+        : spot.level === "high"
+        ? 450
+        : spot.level === "medium"
+        ? 350
+        : 250
+    }
+    pathOptions={{
+      color:
+        spot.level === "critical"
+          ? "#dc2626"
+          : spot.level === "high"
+          ? "#ea580c"
+          : spot.level === "medium"
+          ? "#eab308"
+          : "#22c55e",
+
+      fillOpacity: 0.25,
+      weight: 2,
+    }}
+  >
+    <Tooltip permanent direction="center">
+      <div className="text-center">
+        <div className="font-bold">
+          {spot.level === "critical"
+            ? "🔴"
+            : spot.level === "high"
+            ? "🟠"
+            : spot.level === "medium"
+            ? "🟡"
+            : "🟢"}
+        </div>
+
+        <div className="font-bold">
+          {spot.riskScore}
+        </div>
+
+        <div style={{fontSize:"10px"}}>
+          {spot.count} reports
+        </div>
+      </div>
+    </Tooltip>
+  </Circle>
+))}
 
         {viewMode === 'pins' &&
           filteredPins.map((pin) => (
