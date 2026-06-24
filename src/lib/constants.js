@@ -23,6 +23,8 @@ export const USER_ZOOM = 13;
 
 export const PIN_EXPIRY_HOURS = 24;
 
+export const VERIFY_RADIUS_METERS = 500;
+
 export const GEMINI_SYSTEM_PROMPT = `You are a crisis reporting assistant for a disaster relief map. 
 Extract information from the user's message and return ONLY a valid JSON object. 
 No explanation, no markdown, no backticks. Just raw JSON.

@@ -12,6 +12,7 @@ import {
 import { db } from '../lib/firebase';
 import { PIN_EXPIRY_HOURS } from '../lib/constants';
 import { auth } from "../lib/auth";
+import { arrayUnion } from "firebase/firestore";
 
 export function usePins() {
   const [pins, setPins] = useState([]);
@@ -87,6 +88,9 @@ export function usePins() {
       name: pinData.name || 'Anonymous',
       status: 'active',
       upvotes: 0,
+      confirmations: 0,
+      confirmedBy: [],
+      verificationScore: 0,
       createdAt: serverTimestamp(),
       expiresAt: Timestamp.fromDate(expiresAt),
       ownerId: auth.currentUser?.uid,
@@ -100,8 +104,44 @@ export function usePins() {
   }
 
   async function upvotePin(pinId) {
-    await updateDoc(doc(db, 'pins', pinId), { upvotes: increment(1) });
+  const pin = pins.find((p) => p.id === pinId);
+
+  if (!pin) return;
+
+  const upvotes = (pin.upvotes || 0) + 1;
+
+  const verificationScore = Math.min(
+    100,
+    (pin.confirmations || 0) * 10 + upvotes * 5
+  );
+
+  await updateDoc(doc(db, "pins", pinId), {
+    upvotes: increment(1),
+    verificationScore,
+  });
+}
+
+  async function confirmPin(pinId, uid) {
+  const pin = pins.find((p) => p.id === pinId);
+
+  if (!pin) return;
+
+  if (pin.confirmedBy?.includes(uid)) {
+    return;
   }
 
-  return { pins, loading, error, stats, addPin, resolvePin, upvotePin };
+  const confirmations = (pin.confirmations || 0) + 1;
+  const verificationScore = Math.min(
+    100,
+    confirmations * 10 + (pin.upvotes || 0) * 5
+  );
+
+  await updateDoc(doc(db, "pins", pinId), {
+    confirmations,
+    confirmedBy: arrayUnion(uid),
+    verificationScore,
+  });
+}
+
+  return { pins, loading, error, stats, addPin, resolvePin, upvotePin, confirmPin, };
 }

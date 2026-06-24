@@ -9,13 +9,14 @@ import ChatWidget from './components/ChatWidget';
 import { usePins } from './hooks/usePins';
 import { useGeolocation } from './hooks/useGeolocation';
 import { CATEGORY_LIST, USER_ZOOM, DEFAULT_ZOOM } from './lib/constants';
+import { auth } from "./lib/auth";
 
 function AppContent() {
   const { pinId } = useParams();
   const navigate = useNavigate();
   const mapSectionRef = useRef(null);
 
-  const { pins, loading, stats, addPin, resolvePin, upvotePin } = usePins();
+  const { pins, loading, stats, addPin, resolvePin, upvotePin, confirmPin, } = usePins();
   const { position, loading: geoLoading } = useGeolocation();
 
   const [activeCategories, setActiveCategories] = useState([...CATEGORY_LIST]);
@@ -106,6 +107,45 @@ function AppContent() {
     mapSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
+  const handleConfirm = useCallback(async (pinId) => {
+  const pin = pins.find((p) => p.id === pinId);
+
+  if (!pin) return;
+
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const distance = L.latLng(
+        position.coords.latitude,
+        position.coords.longitude
+      ).distanceTo(
+        L.latLng(pin.lat, pin.lng)
+      );
+
+      if (distance > VERIFY_RADIUS_METERS) {
+        alert(
+          `You are ${Math.round(distance)}m away.\n\nOnly users within ${VERIFY_RADIUS_METERS}m can verify this report.`
+        );
+        return;
+      }
+
+      await confirmPin(pinId, auth.currentUser?.uid);
+
+      alert("✅ Report verified successfully!");
+    },
+    () => {
+      alert("Unable to fetch your location.");
+    },
+    {
+      enableHighAccuracy: true,
+    }
+  );
+}, [pins, confirmPin]);
+
   return (
     <div className="min-h-screen bg-navy">
       <HeroSection stats={stats} onScrollToMap={scrollToMap} />
@@ -131,6 +171,7 @@ function AppContent() {
           onMapClick={handleMapClick}
           onResolve={resolvePin}
           onUpvote={handleUpvote}
+          onConfirm={handleConfirm}
           upvotedIds={upvotedIds}
           highlightPinId={pinId}
           loading={loading || geoLoading}

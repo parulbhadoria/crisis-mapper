@@ -110,7 +110,7 @@ function HeatmapLayer({ pins, visible }) {
   return null;
 }
 
-function AnimatedMarker({ pin, onResolve, onUpvote, upvotedIds, openPopup }) {
+function AnimatedMarker({ pin, pins, onResolve, onUpvote, onConfirm, upvotedIds, openPopup }) {
   const markerRef = useRef(null);
 
   useEffect(() => {
@@ -130,8 +130,10 @@ function AnimatedMarker({ pin, onResolve, onUpvote, upvotedIds, openPopup }) {
       <Popup>
         <PinPopup
           pin={pin}
+          pins={pins}
           onResolve={onResolve}
           onUpvote={onUpvote}
+          onConfirm={onConfirm}
           upvoted={upvotedIds.has(pin.id)}
         />
       </Popup>
@@ -148,6 +150,7 @@ export default function MapView({
   onMapClick,
   onResolve,
   onUpvote,
+  onConfirm,
   upvotedIds,
   highlightPinId,
   loading,
@@ -195,8 +198,10 @@ export default function MapView({
             <AnimatedMarker
               key={pin.id}
               pin={pin}
+              pins={pins}
               onResolve={onResolve}
               onUpvote={onUpvote}
+              onConfirm={onConfirm}
               upvotedIds={upvotedIds}
               openPopup={pin.id === highlightPinId}
             />
