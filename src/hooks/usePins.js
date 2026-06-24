@@ -83,6 +83,8 @@ export function usePins() {
       lng: pinData.lng,
       category: pinData.category,
       severity: pinData.severity,
+      helpType: pinData.helpType || null,
+      availability: pinData.availability || null,
       type: pinData.type,
       note: pinData.note,
       name: pinData.name || 'Anonymous',

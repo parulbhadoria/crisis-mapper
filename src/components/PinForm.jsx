@@ -5,6 +5,8 @@ import { CATEGORY_LIST, CATEGORIES } from '../lib/constants';
 const EMPTY_FORM = {
   category: 'Medical',
   severity: 'Urgent',
+  helpType: 'General Volunteer',
+  availability: 'Available Now',
   note: '',
   name: '',
   lat: null,
@@ -79,36 +81,98 @@ export default function PinForm({ isOpen, onClose, onSubmit, initialData, submit
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-1.5">
-              Severity
-            </label>
-            <div className="flex gap-3">
-              {['Low', 'Urgent', 'Critical'].map((sev) => (
-                <label key={sev} className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="severity"
-                    value={sev}
-                    checked={form.severity === sev}
-                    onChange={(e) => handleChange('severity', e.target.value)}
-                    className="accent-red-500"
-                  />
-                  <span className="text-sm text-slate-300">{sev}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+          {form.type === "needs_help" ? (
+  <div>
+    <label className="block text-sm font-semibold text-slate-300 mb-1.5">
+      Severity
+    </label>
+
+    <div className="flex gap-3">
+      {["Low", "Urgent", "Critical"].map((sev) => (
+        <label
+          key={sev}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <input
+            type="radio"
+            value={sev}
+            checked={form.severity === sev}
+            onChange={(e) =>
+              handleChange("severity", e.target.value)
+            }
+            className="accent-red-500"
+          />
+
+          <span className="text-sm text-slate-300">
+            {sev}
+          </span>
+        </label>
+      ))}
+    </div>
+  </div>
+) : (
+  <>
+    <div>
+      <label className="block text-sm font-semibold text-slate-300 mb-1.5">
+        Help Type
+      </label>
+
+      <select
+        value={form.helpType}
+        onChange={(e) =>
+          handleChange("helpType", e.target.value)
+        }
+        className="input-field"
+      >
+        <option>General Volunteer</option>
+        <option>Medical Assistance</option>
+        <option>Food Distribution</option>
+        <option>Transportation</option>
+        <option>Shelter Support</option>
+        <option>Water Supply</option>
+      </select>
+    </div>
+
+    <div className="mt-4">
+      <label className="block text-sm font-semibold text-slate-300 mb-1.5">
+        Availability
+      </label>
+
+      <select
+        value={form.availability}
+        onChange={(e) =>
+          handleChange("availability", e.target.value)
+        }
+        className="input-field"
+      >
+        <option>Available Now</option>
+        <option>Within 30 Minutes</option>
+        <option>Later Today</option>
+      </select>
+    </div>
+  </>
+)}
 
           <div>
             <label className="block text-sm font-semibold text-slate-300 mb-1.5">
-              Note <span className="text-slate-500 font-normal">(max 100 chars)</span>
+              {form.type === "needs_help"
+                ? "Situation"
+                : "How can you help?"}
+
+              <span className="text-slate-500 font-normal">
+                {" "}
+                (max 100 chars)
+              </span>
             </label>
             <input
               type="text"
               value={form.note}
               onChange={(e) => handleChange('note', e.target.value.slice(0, 100))}
-              placeholder="Describe the situation..."
+              placeholder={
+                        form.type === "needs_help"
+                          ? "Describe the situation..."
+                          : "Example: Can transport 4 people with my SUV"
+                      }
               className="input-field"
               maxLength={100}
             />

@@ -169,24 +169,56 @@ export default function PinPopup({ pin, pins, onResolve, onUpvote, onConfirm, up
 </div>
 
 {pin.type === "needs_help" && nearbyHelpers.length > 0 && (
-  <div className="mb-3">
-    <h4 className="text-xs font-semibold text-slate-700 mb-2">
-      🤝 Nearby Helpers
-    </h4>
+  <div className="mt-3 mb-3 rounded-lg border border-green-200 bg-green-50 p-3">
+    <div className="flex items-center justify-between mb-2">
+      <h4 className="text-sm font-semibold text-green-800">
+        🤝 Nearby Assistance
+      </h4>
 
-    <div className="space-y-1">
+      <span className="text-xs font-medium text-green-700">
+        {nearbyHelpers.length} Available
+      </span>
+    </div>
+
+    <p className="text-xs text-slate-600 mb-3">
+      Closest helper is{" "}
+      <span className="font-semibold text-green-700">
+        {nearbyHelpers[0].distance < 1000
+          ? `${Math.round(nearbyHelpers[0].distance)} m`
+          : `${(nearbyHelpers[0].distance / 1000).toFixed(1)} km`}
+      </span>{" "}
+      away.
+    </p>
+
+    <div className="space-y-2">
       {nearbyHelpers.map((helper) => (
         <div
           key={helper.id}
-          className="flex justify-between text-xs text-slate-600"
+          className="rounded-md bg-white border border-slate-200 p-2"
         >
-          <span>{helper.name || "Anonymous"}</span>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-800">
+              {helper.helpType || "General Volunteer"}
+            </span>
 
-          <span>
-            {helper.distance < 1000
-              ? `${Math.round(helper.distance)} m`
-              : `${(helper.distance / 1000).toFixed(1)} km`}
-          </span>
+            <span className="text-xs font-medium text-blue-600">
+              {helper.distance < 1000
+                ? `${Math.round(helper.distance)} m`
+                : `${(helper.distance / 1000).toFixed(1)} km`}
+            </span>
+          </div>
+
+          {helper.availability && (
+            <div className="text-[11px] text-green-600 mt-1">
+              🟢 {helper.availability}
+            </div>
+          )}
+
+          {helper.note && (
+            <div className="text-[11px] text-slate-500 mt-1">
+              {helper.note}
+            </div>
+          )}
         </div>
       ))}
     </div>
