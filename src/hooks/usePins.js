@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { PIN_EXPIRY_HOURS } from '../lib/constants';
+import { auth } from "../lib/auth";
 
 export function usePins() {
   const [pins, setPins] = useState([]);
@@ -88,6 +89,7 @@ export function usePins() {
       upvotes: 0,
       createdAt: serverTimestamp(),
       expiresAt: Timestamp.fromDate(expiresAt),
+      ownerId: auth.currentUser?.uid,
     });
 
     return docRef.id;

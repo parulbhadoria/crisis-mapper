@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ThumbsUp, CheckCircle, Share2 } from 'lucide-react';
 import { CATEGORIES, SEVERITY_CONFIG } from '../lib/constants';
+import { auth } from "../lib/auth";
 
 function formatTime(timestamp) {
   if (!timestamp) return 'Just now';
@@ -79,7 +80,7 @@ export default function PinPopup({ pin, onResolve, onUpvote, upvoted }) {
           {(pin.upvotes || 0) === 1 ? ' person' : ' people'} confirmed
         </button>
 
-        {!isResolved && (
+        {!isResolved && pin.ownerId === auth.currentUser?.uid && (
           <button
             type="button"
             onClick={() => onResolve(pin.id)}
