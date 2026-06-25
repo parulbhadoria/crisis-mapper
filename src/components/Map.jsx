@@ -7,6 +7,7 @@ import { CATEGORIES, SEVERITY_CONFIG, RESOLVED_COLOR, USER_ZOOM } from '../lib/c
 import PinPopup from './PinPopup';
 import { Circle, Tooltip } from "react-leaflet";
 import { useHotspots } from "../hooks/useHotspots";
+import MapLegend from "./MapLegend";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -246,6 +247,8 @@ export default function MapView({
     </Tooltip>
   </Circle>
 ))}
+
+<MapLegend />
 
         {viewMode === 'pins' &&
           filteredPins.map((pin) => (

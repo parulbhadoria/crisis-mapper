@@ -9,6 +9,7 @@ const EMPTY_FORM = {
   availability: 'Available Now',
   note: '',
   name: '',
+  image: null,
   lat: null,
   lng: null,
   type: 'needs_help',
@@ -190,6 +191,7 @@ export default function PinForm({ isOpen, onClose, onSubmit, initialData, submit
               className="input-field"
             />
           </div>
+          
 
           <div>
             <label className="block text-sm font-semibold text-slate-300 mb-1.5">

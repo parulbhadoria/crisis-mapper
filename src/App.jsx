@@ -187,7 +187,10 @@ function AppContent() {
     <div className="min-h-screen bg-navy">
       <HeroSection stats={stats} onScrollToMap={scrollToMap} />
 
-      <div ref={mapSectionRef} className="max-w-7xl mx-auto px-4 pb-24 space-y-4">
+      <div
+  ref={mapSectionRef}
+  className="relative max-w-7xl mx-auto px-4 pb-24"
+>
         <StatsBar stats={stats} />
         <FilterBar
           activeCategories={activeCategories}
