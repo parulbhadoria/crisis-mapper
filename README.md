@@ -15,7 +15,6 @@ CrisisMapper AI is a real-time disaster response platform that enables communiti
 ## Screenshots
 
 
-```md
 ![Home](./screenshots/home.png)
 
 ![AI Reporting](./screenshots/ai-reporting.png)
@@ -23,7 +22,7 @@ CrisisMapper AI is a real-time disaster response platform that enables communiti
 ![Heatmap](./screenshots/heatmap.png)
 
 ![Incident Details](./screenshots/popup.png)
-```
+
 
 ---
 
