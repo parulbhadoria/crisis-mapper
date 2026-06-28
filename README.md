@@ -1,364 +1,118 @@
-# 🌍 CrisisMapper AI
+# CrisisMapper AI
 
-> AI-assisted Community Emergency Mapping Platform for Real-Time Disaster Reporting, Verification & Volunteer Coordination.
+> **AI-powered community emergency mapping platform for real-time disaster reporting, geo-verification, and volunteer coordination.**
 
----
-
-## 📌 Overview
-
-CrisisMapper AI is a crowdsourced emergency response platform that enables people to report incidents, verify emergencies using geolocation, discover nearby volunteers, visualize disaster hotspots, and coordinate community response in real time.
-
-The platform combines **real-time mapping**, **community verification**, **AI-assisted reporting**, and **location intelligence** to improve disaster awareness and response.
+CrisisMapper AI is a real-time disaster response platform that enables communities to report emergencies, verify incidents using GPS-based witness confirmation, discover nearby helpers, and visualize disaster hotspots. By combining AI-assisted reporting with live mapping and community participation, the platform improves disaster awareness and emergency response.
 
 ---
 
-# ✨ Features
+## Demo
 
-## 📍 Interactive Live Map
-
-- Click anywhere to drop an incident
-- Automatic user location detection
-- Fly-to animation for shared incidents
-- Real-time updates using Firebase
+🎥 **Video:** https://youtu.be/eUVSs_g53yM?si=f1Sq_-_JDS3q6mY_
 
 ---
 
-## 🤖 AI Incident Reporting
+## Screenshots
 
-Instead of manually filling the form, users can simply describe their situation in natural language.
 
-Example:
+```md
+![Home](./screenshots/home.png)
 
-> "There is a fire near Agra Cantt."
+![AI Reporting](./screenshots/ai-reporting.png)
 
-The AI automatically:
+![Heatmap](./screenshots/heatmap.png)
 
-- Understands the emergency
-- Detects severity
-- Selects the correct category
-- Opens the report form with pre-filled details
-- Places the incident on the map
-
-This makes reporting much faster during emergencies.
-
----
-
-## 🚨 Emergency Reporting
-
-Supported incident categories:
-
-- 🚑 Medical
-- 🔥 Fire
-- 🚗 Accident
-- 🌊 Flood
-- 🚓 Crime
-- ⚡ Infrastructure Damage
-- 👤 Missing Person
-- ❓ Other
-
-Each report stores:
-
-- Category
-- Severity
-- Notes
-- GPS Location
-- Timestamp
-- Optional Reporter Name
-
----
-
-## ❤️ Offer Help
-
-Users can also register themselves as available helpers.
-
-Examples:
-
-- Doctor
-- Ambulance
-- NGO
-- Rescue Team
-- Food Distribution
-- Volunteer
-
-These helpers appear separately from emergency requests.
-
----
-
-## 👍 Community Support
-
-Anyone can support an incident by clicking **👍 Support**.
-
-Support:
-
-- increases community confidence
-- contributes to Verification Score
-- is limited to one vote per user/browser
-
----
-
-## ✅ Geo-Verified Witness Confirmation
-
-Unlike a normal support vote, verification requires the user to be physically close to the reported incident.
-
-Features:
-
-- Browser GPS verification
-- Distance calculation
-- Configurable verification radius
-- Prevents fake confirmations
-- One verification per authenticated user
-
----
-
-## 📈 Verification Score
-
-Every incident receives a dynamic trust score.
-
-Calculated using:
-
-- Community Support
-- Verified Witnesses
-
-Displayed as:
-
-- Percentage
-- Progress Bar
-- Color Indicator
-
----
-
-## 🆘 SOS Emergency Button
-
-In situations where users cannot type, a single tap on **SOS** instantly creates:
-
-- Medical Emergency
-- Critical Severity
-- Current GPS Location
-
-No form filling required.
-
----
-
-## 🤝 Nearby Helpers
-
-Every emergency popup automatically displays nearby volunteers.
-
-Sorted by:
-
-- Distance
-
-Examples:
-
-- Doctors
-- Ambulances
-- NGOs
-- Volunteers
-
-Helping victims quickly identify available assistance.
-
----
-
-## 🔥 AI Hotspot Detection
-
-Nearby emergency reports are automatically clustered into hotspots.
-
-Each hotspot displays:
-
-- Number of nearby incidents
-- Hotspot Score
-- Circle overlay on map
-
-Only active emergency requests contribute.
-
-Volunteer locations are intentionally excluded.
-
----
-
-## 🌡 Heatmap Mode
-
-Toggle between:
-
-- 📍 Pin View
-- 🔥 Heatmap View
-
-to visualize areas with high emergency density.
-
----
-
-## 📊 Live Statistics Dashboard
-
-Displays:
-
-- Active Incidents
-- Resolved Today
-- Available Helpers
-- Category Distribution
-
-Updates instantly from Firestore.
-
----
-
-## 🔗 Shareable Incident Links
-
-Every report generates a unique URL.
-
-Opening the link:
-
-- focuses the map
-- flies directly to the incident
-- automatically opens its popup
-
----
-
-## ✔ Mark Resolved
-
-Incident owners can mark emergencies as resolved.
-
-Resolved incidents:
-
-- change color
-- leave hotspot calculations
-- remain visible until expiry
-
----
-
-## ⏰ Automatic Pin Expiry
-
-Old incidents automatically expire after the configured duration to keep the map clean.
-
----
-
-## 🔄 Real-Time Synchronization
-
-Using Firestore realtime listeners:
-
-- Live pins
-- Live verification
-- Live support count
-- Live helper updates
-- Live hotspot updates
-
-No page refresh required.
-
----
-
-## 🔒 Anonymous Authentication
-
-Firebase Anonymous Authentication provides:
-
-- Unique user identity
-- Prevents duplicate verification
-- Prevents duplicate support votes
-
-without requiring account creation.
-
----
-
-## 📱 Responsive UI
-
-Fully responsive across:
-
-- Desktop
-- Tablet
-- Mobile
-
----
-
-## 🗺 Map Legend
-
-Built-in legend explains:
-
-- Severity Colors
-- Hotspots
-- Resolved Reports
-- Nearby Helpers
-
----
-
-# 🛠 Tech Stack
-
-Frontend
-
-- React
-- Vite
-- Tailwind CSS
-- React Leaflet
-- Leaflet Heat
-- Lucide Icons
-
-Backend
-
-- Firebase Firestore
-- Firebase Anonymous Authentication
-
-AI
-
-- Google Gemini API
-
-Maps
-
-- OpenStreetMap
-- Leaflet
-
----
-
-# 📂 Project Structure
-
+![Incident Details](./screenshots/popup.png)
 ```
+
+---
+
+## Features
+
+* AI-assisted incident reporting using Google Gemini
+* Interactive live emergency map
+* GPS-based witness verification
+* Community support and verification score
+* Heatmap and hotspot visualization
+* Nearby helper discovery
+* One-tap SOS emergency reporting
+* Live statistics dashboard
+* Shareable incident links
+* Mark incidents as resolved
+* Automatic incident expiry
+* Real-time synchronization with Firebase
+* Anonymous authentication
+* Responsive design
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* JavaScript
+* Tailwind CSS
+* React Leaflet
+* Leaflet Heat
+* Lucide React
+
+### Backend
+
+* Firebase Firestore
+* Firebase Anonymous Authentication
+
+### AI
+
+* Google Gemini API
+
+### Maps
+
+* Leaflet
+* OpenStreetMap
+* Browser Geolocation API
+
+---
+
+## Project Structure
+
+```text
 src/
-│
 ├── components/
-│   ├── Map.jsx
-│   ├── PinForm.jsx
-│   ├── PinPopup.jsx
-│   ├── ChatWidget.jsx
-│   ├── StatsBar.jsx
-│   └── ...
-│
 ├── hooks/
-│   ├── usePins.js
-│   ├── useGeolocation.js
-│   └── useHotspots.js
-│
 ├── lib/
-│   ├── firebase.js
-│   ├── auth.js
-│   └── constants.js
-│
 └── App.jsx
 ```
 
 ---
 
-# 🚀 Getting Started
+## Getting Started
 
-## 1 Clone Repository
+### Prerequisites
+
+* Node.js (v18 or later)
+* npm
+* Firebase Project
+* Google Gemini API Key
+
+### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/CrisisMapper.git
+git clone https://github.com/parulbhadoria/crisis-mapper.git
 
-cd CrisisMapper
+cd crisis-mapper
 ```
 
----
-
-## 2 Install Dependencies
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
----
+### Configure Environment Variables
 
-## 3 Create Environment File
-
-Create
-
-```
-.env
-```
-
-Add your Firebase and Gemini credentials.
+Create a `.env` file in the project root.
 
 ```env
 VITE_FIREBASE_API_KEY=
@@ -376,34 +130,22 @@ VITE_FIREBASE_APP_ID=
 VITE_GEMINI_API_KEY=
 ```
 
----
+### Firebase Setup
 
-## 4 Enable Firebase
+Create a Firebase project and enable:
 
-Create a Firebase project.
+* Firestore Database
+* Anonymous Authentication
 
-Enable:
+Copy your Firebase configuration values into the `.env` file.
 
-- Firestore Database
-- Anonymous Authentication
-
-Copy your configuration into the `.env` file.
-
----
-
-## 5 Install Firestore Rules
-
-Use appropriate Firestore rules for your project (development or production).
-
----
-
-## 6 Start Development Server
+### Run the Project
 
 ```bash
 npm run dev
 ```
 
-Open
+Visit:
 
 ```
 http://localhost:5173
@@ -411,77 +153,46 @@ http://localhost:5173
 
 ---
 
-# 🧠 How AI Reporting Works
+## AI Workflow
 
-1. User types a message.
-
-Example:
-
-```
-There is a building on fire near Agra Cantt.
-```
-
-↓
-
-Gemini analyzes the message.
-
-↓
-
-Extracts:
-
-- Category
-- Severity
-- Description
-
-↓
-
-Automatically opens the report form.
-
-↓
-
-User only confirms the location.
-
-↓
-
-Incident is submitted to Firestore.
+1. User describes an emergency.
+2. Gemini identifies the category and severity.
+3. The report form is automatically populated.
+4. User confirms the location.
+5. Incident is saved to Firestore.
+6. All connected users receive real-time updates.
 
 ---
 
-# 🔥 Demo Scenario
+## Future Improvements
 
-Recommended demo flow:
-
-1. Open application
-2. Show live statistics
-3. Toggle Heatmap
-4. Display hotspot circles
-5. Report a new emergency
-6. Use AI chat to create another report
-7. Trigger SOS
-8. Support an incident
-9. Geo-verify the incident
-10. Show nearby helpers
-11. Share incident link
-12. Mark incident resolved
-13. Show real-time synchronization in another browser tab
+* AI image verification
+* Offline reporting
+* Push notifications
+* SMS alerts
+* Government dashboard
+* Rescue route optimization
+* Predictive disaster analytics
+* Multi-language support
 
 ---
 
-# 🌱 Future Improvements
+## Contributing
 
-- AI Image Verification
-- Offline Reporting
-- SMS Alerts
-- Government Dashboard
-- Rescue Route Optimization
-- Predictive Disaster Analytics
-- Drone Integration
-- Push Notifications
+Contributions and suggestions are welcome.
+
+Fork the repository, create a feature branch, and submit a pull request.
 
 ---
 
-# 👨‍💻 Author
+## License
 
-Developed for hackathon submission.
+This project is licensed under the MIT License.
 
-Built with ❤️ using React, Firebase, Leaflet and Gemini AI.
+---
+
+## Author
+
+**Parul Bhadoria**
+
+Built using React, Firebase, Leaflet, and Google Gemini AI.
