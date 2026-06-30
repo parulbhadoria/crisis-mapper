@@ -9,6 +9,7 @@ CrisisMapper AI is a real-time disaster response platform that enables communiti
 ## Demo
 
 🎥 **Video:** https://youtu.be/eUVSs_g53yM?si=f1Sq_-_JDS3q6mY_
+**Live Demo:** https://crisis-mapper-deploy.vercel.app/
 
 ---
 
